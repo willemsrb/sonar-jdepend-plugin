@@ -8,6 +8,8 @@ jdk:
 os: linux
   
 before_install:
-  - rm -rf $HOME/.m2
+  - ls -al $HOME/
+  - ls -l $HOME/.m2
+  - cat $HOME/.m2/settings.xml
   - mvn help:effective-settings
   - mvn help:effective-pom
