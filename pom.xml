@@ -4,7 +4,7 @@
 
     <groupId>nl.future-edge.sonarqube.plugins</groupId>
     <artifactId>sonar-jdepend-plugin</artifactId>
-    <packaging>jar</packaging>
+    <packaging>sonar-plugin</packaging>
     <version>0.1-SNAPSHOT</version>
 
     <name>jDepend Plugin for SonarQube</name>
@@ -69,7 +69,6 @@
 
     <build>
         <plugins>
-            <!--
             <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
@@ -79,7 +78,6 @@
                     <pluginClass>nl.futureedge.sonar.plugin.jdepend.JdependPlugin</pluginClass>
                 </configuration>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

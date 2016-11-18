@@ -1,12 +1,11 @@
-language: java
-
 sudo: false
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+language: java
 
 jdk:
   - oraclejdk8
-
-os: linux
-  
-before_install:
-  - mvn help:effective-settings
-  - mvn help:effective-pom
