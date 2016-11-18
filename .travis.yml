@@ -12,7 +12,7 @@ jdk:
 os: linux
   
 before_install:
-  - ls-l $HOME/.m2
+  - ls -l $HOME/.m2
   - cat $HOME/.m2/settings.xml
   - mvn help:effective-settings
   - mvn help:effective-pom
