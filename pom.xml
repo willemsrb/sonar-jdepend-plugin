@@ -20,9 +20,9 @@
 
     <repositories>
         <repository>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
+            <id>maven-central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo1.maven.org/maven2</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -42,7 +42,6 @@
             <artifactId>jdepend</artifactId>
             <version>${jdepend.version}</version>
         </dependency>
-
 
         <!-- unit tests -->
         <dependency>
