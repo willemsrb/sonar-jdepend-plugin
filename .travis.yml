@@ -9,7 +9,6 @@ cache:
 jdk:
   - oraclejdk8
 
-script:
+before_install:
   - mvn help:effective-settings
   - mvn help:effective-pom
-  - mvn clean install
