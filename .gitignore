@@ -1,3 +1,17 @@
+#
+# GitHub template: java.gitignore
+#
+.class
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+#
+# GitHub template: java.gitignore
+#
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -7,3 +21,13 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+!/.mvn/wrapper/maven-wrapper.jar
+
+#
+# eclipse
+#
+**/.project
+**/.settings
+**/.classpath
+**/.checkstyle
+**/.eclipse-pmd
