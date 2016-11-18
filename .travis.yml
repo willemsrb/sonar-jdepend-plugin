@@ -2,17 +2,12 @@ language: java
 
 sudo: false
 
-cache:
-  directories:
-    - $HOME/.m2
-
 jdk:
   - oraclejdk8
 
 os: linux
   
 before_install:
-  - ls -l $HOME/.m2
-  - cat $HOME/.m2/settings.xml
+  - rm -rf $HOME/.m2
   - mvn help:effective-settings
   - mvn help:effective-pom
