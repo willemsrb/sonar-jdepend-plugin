@@ -30,9 +30,7 @@
   </ciManagement>
 
   <scm>
-    <url>https://github.com/willemsrb/sonar-jdepend-plugin</url>
-    <connection>scm:git:git@github.com:willemsrb/sonar-jdepend-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:willemsrb/sonar-jdepend-plugin.git</developerConnection>
+    <url>https://github.com/willemsrb/sonar-jdepend-plugin.git</url>
     <tag>HEAD</tag>
   </scm>
 
