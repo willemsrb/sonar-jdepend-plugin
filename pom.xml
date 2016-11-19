@@ -5,7 +5,7 @@
   <groupId>nl.future-edge.sonarqube.plugins</groupId>
   <artifactId>sonar-jdepend-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>0.1</version>
+  <version>0.1-SNAPSHOT</version>
 
   <name>jDepend Plugin for SonarQube</name>
   <description>jDepend Plugin for SonarQube</description>
