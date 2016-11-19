@@ -31,7 +31,7 @@
 
   <scm>
     <url>https://github.com/willemsrb/sonar-jdepend-plugin</url>
-    <connection>https://github.com/willemsrb/sonar-jdepend-plugin.git</connection>
+    <connection>scm:git:https://github.com/willemsrb/sonar-jdepend-plugin.git</connection>
     <tag>HEAD</tag>
   </scm>
 
