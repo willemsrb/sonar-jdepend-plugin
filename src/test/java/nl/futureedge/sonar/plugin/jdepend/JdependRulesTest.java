@@ -160,6 +160,32 @@ public class JdependRulesTest {
 	}
 
 	@Test
+	public void testDistanceFromMainSequence() {
+		// Add package info
+		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.coupling.packagea");
+		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.coupling.packageb");
+		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.coupling.packagec");
+		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.coupling.packaged");
+		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.coupling.packagee");
+
+		// Add rule with config
+		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
+		activeRules.create(JdependRulesDefinition.DISTANCE_FROM_MAIN_SEQUENCE_RULE).setParam("maximum", "50")
+				.activate();
+		sensorContext.setActiveRules(activeRules.build());
+
+		// Execute
+		final JdependSensor subject = new JdependSensor();
+		subject.execute(sensorContext);
+
+		// Check
+		Assert.assertEquals(1, sensorContext.allIssues().size());
+		final InputFile issueLocation = (InputFile) sensorContext.allIssues().iterator().next().primaryLocation()
+				.inputComponent();
+		Assert.assertTrue(issueLocation.relativePath().endsWith("/coupling/packagee/package-info.java"));
+	}
+
+	@Test
 	public void testPackageDependencyCycle() {
 		// Add package info
 		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.packagedependencycycle.packagea");
