@@ -13,8 +13,11 @@ import org.sonar.api.utils.log.Loggers;
 
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
+import nl.futureedge.sonar.plugin.jdepend.rules.AbstractnessRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.AfferentCouplingsRule;
+import nl.futureedge.sonar.plugin.jdepend.rules.DistanceFromMainSequenceRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.EfferentCouplingsRule;
+import nl.futureedge.sonar.plugin.jdepend.rules.InstabilityRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.NumberOfClassesAndInterfacesRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.PackageDependencyCyclesRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.Rule;
@@ -54,6 +57,9 @@ public final class JdependSensor implements Sensor {
 		final Rule numberOfClassesAndInterfacesRule = new NumberOfClassesAndInterfacesRule(context);
 		final Rule afferentCouplingsRule = new AfferentCouplingsRule(context);
 		final Rule efferentCouplingsRule = new EfferentCouplingsRule(context);
+		final Rule abstractnessRule = new AbstractnessRule(context);
+		final Rule instabilityRule = new InstabilityRule(context);
+		final Rule distanceFromMainSequenceRule = new DistanceFromMainSequenceRule(context);
 		final Rule packageDependencyCyclesRule = new PackageDependencyCyclesRule(context);
 
 		// Report issues
@@ -69,6 +75,9 @@ public final class JdependSensor implements Sensor {
 				numberOfClassesAndInterfacesRule.execute(javaPackage, packageInfoFile);
 				afferentCouplingsRule.execute(javaPackage, packageInfoFile);
 				efferentCouplingsRule.execute(javaPackage, packageInfoFile);
+				abstractnessRule.execute(javaPackage, packageInfoFile);
+				instabilityRule.execute(javaPackage, packageInfoFile);
+				distanceFromMainSequenceRule.execute(javaPackage, packageInfoFile);
 				packageDependencyCyclesRule.execute(javaPackage, packageInfoFile);
 			}
 		}
