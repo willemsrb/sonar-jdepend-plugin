@@ -31,11 +31,11 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public PackageDependencyCyclesRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.NUMBER_OF_CLASSES_AND_INTERFACES_RULE);
+		super(context, JdependRulesDefinition.PACKAGE_DEPENDENCY_CYCLES_RULE);
 
 		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
 		if (maximum == null) {
-			LOGGER.info("Rule activated, no value for parameter {} set. Disabling rule...",
+			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
 					JdependRulesDefinition.PARAM_MAXIMUM);
 			disable();
 		}

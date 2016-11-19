@@ -44,6 +44,7 @@ public final class JdependSensor implements Sensor {
 		// Configure
 		final String javaClasses = context.settings().getString("sonar.java.binaries");
 		try {
+			LOGGER.info("Analysing classes in {}", javaClasses);
 			jdepend.addDirectory(javaClasses);
 		} catch (final IOException e) {
 			throw new IllegalStateException("Could not analyse classes in " + javaClasses, e);

@@ -27,11 +27,11 @@ public class InstabilityRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public InstabilityRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.NUMBER_OF_CLASSES_AND_INTERFACES_RULE);
+		super(context, JdependRulesDefinition.INSTABILITY_RULE);
 
 		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
 		if (maximum == null) {
-			LOGGER.info("Rule activated, no value for parameter {} set. Disabling rule...",
+			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
 					JdependRulesDefinition.PARAM_MAXIMUM);
 			disable();
 		}
@@ -44,6 +44,7 @@ public class InstabilityRule extends AbstractRule implements Rule {
 		}
 
 		final int instability = Math.round(javaPackage.instability() * 100);
+		LOGGER.debug("Package {} has instability of {}", javaPackage.getName(), instability);
 
 		if (instability > maximum) {
 			final NewIssue issue = getContext().newIssue().forRule(getKey());

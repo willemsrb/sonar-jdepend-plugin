@@ -31,7 +31,7 @@ public class NumberOfClassesAndInterfacesRule extends AbstractRule implements Ru
 
 		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
 		if (maximum == null) {
-			LOGGER.info("Rule activated, no value for parameter {} set. Disabling rule...",
+			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
 					JdependRulesDefinition.PARAM_MAXIMUM);
 			disable();
 		}

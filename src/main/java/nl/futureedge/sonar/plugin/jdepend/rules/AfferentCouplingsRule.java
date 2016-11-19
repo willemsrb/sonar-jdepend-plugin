@@ -27,11 +27,11 @@ public class AfferentCouplingsRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public AfferentCouplingsRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.NUMBER_OF_CLASSES_AND_INTERFACES_RULE);
+		super(context, JdependRulesDefinition.AFFERENT_COUPLINGS_RULE);
 
 		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
 		if (maximum == null) {
-			LOGGER.info("Rule activated, no value for parameter {} set. Disabling rule...",
+			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
 					JdependRulesDefinition.PARAM_MAXIMUM);
 			disable();
 		}
