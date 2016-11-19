@@ -15,3 +15,11 @@ addons:
 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file: 'target/sonar-jdepend-plugin-*.jar'
+  skip_cleanup: true
+  on:
+    tags: true
