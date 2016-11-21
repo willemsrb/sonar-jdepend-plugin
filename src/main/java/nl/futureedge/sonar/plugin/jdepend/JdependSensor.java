@@ -44,6 +44,10 @@ public final class JdependSensor implements Sensor {
 		// Configure
 		final String javaClasses = context.settings().getString("sonar.java.binaries");
 		try {
+			if (javaClasses == null || "".equals(javaClasses)) {
+				LOGGER.info("No classes to analyse, skipping analysis");
+				return;
+			}
 			LOGGER.info("Analysing classes in {}", javaClasses);
 			jdepend.addDirectory(javaClasses);
 		} catch (final IOException e) {
