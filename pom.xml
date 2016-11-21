@@ -5,7 +5,7 @@
   <groupId>nl.future-edge.sonarqube.plugins</groupId>
   <artifactId>sonar-jdepend-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.1.1</version>
 
   <name>jDepend Plugin for SonarQube</name>
   <description>jDepend Plugin for SonarQube</description>
@@ -32,7 +32,7 @@
   <scm>
     <url>https://github.com/willemsrb/sonar-jdepend-plugin</url>
     <connection>scm:git:https://github.com/willemsrb/sonar-jdepend-plugin.git</connection>
-    <tag>sonar-jdepend-plugin-0.1</tag>
+    <tag>sonar-jdepend-plugin-0.1.1</tag>
   </scm>
 
   <developers>
