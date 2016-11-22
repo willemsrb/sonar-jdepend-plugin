@@ -10,3 +10,5 @@ Uses the JDepend libraries (http://clarkware.com/software/JDepend.html) to add t
 - Instability
 - Distance from the Main Sequence
 - Package Dependency Cycle
+
+This plugin depends on the existence of a package-info.java file in the package to correctly display issues. 
