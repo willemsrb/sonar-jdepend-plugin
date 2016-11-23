@@ -1,0 +1,17 @@
+<profile>
+  <name>test</name>
+  <language>java</language>
+  <rules>
+    <rule>
+      <repositoryKey>jdepend</repositoryKey>
+      <key>package-cycle</key>
+      <priority>MAJOR</priority>
+      <parameters>
+        <parameter>
+          <key>maximum</key>
+          <value>0</value>
+        </parameter>
+      </parameters>
+    </rule>
+  </rules>
+</profile>

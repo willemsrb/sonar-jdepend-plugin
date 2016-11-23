@@ -3,18 +3,14 @@ package nl.futureedge.sonar.plugin.jdepend;
 import org.junit.Assert;
 import org.junit.Test;
 import org.sonar.api.Plugin;
-import org.sonar.api.SonarQubeSide;
-import org.sonar.api.SonarRuntime;
-import org.sonar.api.internal.SonarRuntimeImpl;
-import org.sonar.api.utils.Version;
+import org.sonar.api.SonarQubeVersion;
 
 public class JdependPluginTest {
 
 	@Test
 	public void test() {
 		final JdependPlugin javaPlugin = new JdependPlugin();
-		final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(Version.create(5, 6), SonarQubeSide.SERVER);
-		final Plugin.Context context = new Plugin.Context(runtime);
+		final Plugin.Context context = new Plugin.Context(SonarQubeVersion.V5_6);
 
 		Assert.assertEquals(0, context.getExtensions().size());
 		javaPlugin.define(context);
