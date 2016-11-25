@@ -12,10 +12,12 @@ public interface Rule {
 
 	/**
 	 * Execute the rule.
-	 * 
-	 * @param javaPackage java package to check
-	 * @param packageInfoFile package info file to add issues to
+	 *
+	 * @param javaPackage
+	 *            java package to check
+	 * @param packageInfoFile
+	 *            package info file to add issues to
 	 */
-	public void execute(JavaPackage javaPackage, InputFile packageInfoFile);
-	
+	void execute(JavaPackage javaPackage, InputFile packageInfoFile);
+
 }

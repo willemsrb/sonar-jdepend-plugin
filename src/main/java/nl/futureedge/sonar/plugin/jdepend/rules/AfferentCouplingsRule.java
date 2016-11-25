@@ -3,11 +3,12 @@ package nl.futureedge.sonar.plugin.jdepend.rules;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.rule.RuleKey;
+import org.sonar.api.server.rule.RuleParamType;
+import org.sonar.api.server.rule.RulesDefinition.NewRepository;
+import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
-import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
 
 /**
  * Afferent couplings rule.
@@ -16,7 +17,25 @@ import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
  */
 public class AfferentCouplingsRule extends AbstractRule implements Rule {
 
-	private static final Logger LOGGER = Loggers.get(AfferentCouplingsRule.class);
+	/** Rule: Afferent coupling. */
+	public static final RuleKey RULE_KEY = RuleKey.of(Rules.REPOSITORY, "afferent-couplings");
+
+	/** Param: maximum. */
+	public static final String PARAM_MAXIMUM = "maximum";
+
+	/**
+	 * Define the rule.
+	 *
+	 * @param repository
+	 */
+	public static void define(final NewRepository repository) {
+		final NewRule afferentCouplingsRule = repository.createRule(RULE_KEY.rule()).setName("Afferent Couplings")
+				.setHtmlDescription(
+						"The number of other packages that depend upon classes within the package is an indicator of the package's responsibility.");
+		afferentCouplingsRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
+				.setDescription("Maximum number of other packages allowed to depend upon classes within the package")
+				.setType(RuleParamType.INTEGER);
+	}
 
 	private final Integer maximum;
 
@@ -27,14 +46,8 @@ public class AfferentCouplingsRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public AfferentCouplingsRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.AFFERENT_COUPLINGS_RULE);
-
-		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
-		if (maximum == null) {
-			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
-					JdependRulesDefinition.PARAM_MAXIMUM);
-			disable();
-		}
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override
@@ -44,7 +57,6 @@ public class AfferentCouplingsRule extends AbstractRule implements Rule {
 		}
 
 		final int afferentCoupling = javaPackage.afferentCoupling();
-
 		if (afferentCoupling > maximum) {
 			final NewIssue issue = getContext().newIssue().forRule(getKey());
 			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))

@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend;
+package nl.futureedge.sonar.plugin.jdepend.rules;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,15 +12,18 @@ import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
+import org.sonar.api.server.rule.RulesDefinition;
 
-public class JdependRulesTest {
+import nl.futureedge.sonar.plugin.jdepend.JdependSensor;
+
+public class RulesTest {
 
 	private SensorContextTester sensorContext;
 
 	@Before
 	public void setup() throws IOException {
 		// Setup base dir
-		final URL location = JdependRulesTest.class.getProtectionDomain().getCodeSource().getLocation();
+		final URL location = RulesTest.class.getProtectionDomain().getCodeSource().getLocation();
 		final File testClassesDir = new File(location.getFile());
 		final File targetDir = testClassesDir.getParentFile();
 		final File baseDir = targetDir.getParentFile();
@@ -39,6 +42,26 @@ public class JdependRulesTest {
 	}
 
 	@Test
+	public void testDefinition() {
+		final RulesDefinition.Context context = new RulesDefinition.Context();
+		new Rules().define(context);
+		final RulesDefinition.Repository repository = context.repository(Rules.REPOSITORY);
+
+		Assert.assertEquals("jDepend", repository.name());
+		Assert.assertEquals("java", repository.language());
+
+		Assert.assertEquals(7, repository.rules().size());
+
+		Assert.assertNotNull(repository.rule(NumberOfClassesAndInterfacesRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(AfferentCouplingsRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(EfferentCouplingsRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(AbstractnessRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(InstabilityRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(DistanceFromMainSequenceRule.RULE_KEY.rule()));
+		Assert.assertNotNull(repository.rule(PackageDependencyCyclesRule.RULE_KEY.rule()));
+	}
+
+	@Test
 	public void testNumberOfClassesAndInterfaces() {
 		// Add package info
 		addPackageInfo("nl.futureedge.sonar.plugin.jdepend.test.numberofclassesandinterfaces.packagea");
@@ -46,8 +69,8 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.NUMBER_OF_CLASSES_AND_INTERFACES_RULE).setParam("maximum", "2")
-				.activate();
+		activeRules.create(NumberOfClassesAndInterfacesRule.RULE_KEY)
+				.setParam(NumberOfClassesAndInterfacesRule.PARAM_MAXIMUM, "2").activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -73,7 +96,8 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.AFFERENT_COUPLINGS_RULE).setParam("maximum", "2").activate();
+		activeRules.create(AfferentCouplingsRule.RULE_KEY).setParam(AfferentCouplingsRule.PARAM_MAXIMUM, "2")
+				.activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -98,7 +122,8 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.EFFERENT_COUPLINGS_RULE).setParam("maximum", "2").activate();
+		activeRules.create(EfferentCouplingsRule.RULE_KEY).setParam(EfferentCouplingsRule.PARAM_MAXIMUM, "2")
+				.activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -120,7 +145,7 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.ABSTRACTNESS_RULE).setParam("maximum", "50").activate();
+		activeRules.create(AbstractnessRule.RULE_KEY).setParam(AbstractnessRule.PARAM_MAXIMUM, "50").activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -145,7 +170,7 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.INSTABILITY_RULE).setParam("maximum", "80").activate();
+		activeRules.create(InstabilityRule.RULE_KEY).setParam(InstabilityRule.PARAM_MAXIMUM, "80").activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -170,8 +195,8 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.DISTANCE_FROM_MAIN_SEQUENCE_RULE).setParam("maximum", "50")
-				.activate();
+		activeRules.create(DistanceFromMainSequenceRule.RULE_KEY)
+				.setParam(DistanceFromMainSequenceRule.PARAM_MAXIMUM, "50").activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute
@@ -195,7 +220,8 @@ public class JdependRulesTest {
 
 		// Add rule with config
 		final ActiveRulesBuilder activeRules = new ActiveRulesBuilder();
-		activeRules.create(JdependRulesDefinition.PACKAGE_DEPENDENCY_CYCLES_RULE).setParam("maximum", "0").activate();
+		activeRules.create(PackageDependencyCyclesRule.RULE_KEY)
+				.setParam(PackageDependencyCyclesRule.PARAM_MAXIMUM, "0").activate();
 		sensorContext.setActiveRules(activeRules.build());
 
 		// Execute

@@ -21,6 +21,7 @@ import nl.futureedge.sonar.plugin.jdepend.rules.InstabilityRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.NumberOfClassesAndInterfacesRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.PackageDependencyCyclesRule;
 import nl.futureedge.sonar.plugin.jdepend.rules.Rule;
+import nl.futureedge.sonar.plugin.jdepend.rules.Rules;
 
 /**
  * jDepend sensor.
@@ -32,8 +33,8 @@ public final class JdependSensor implements Sensor {
 	@Override
 	public void describe(final SensorDescriptor descriptor) {
 		descriptor.name("jDepend sensor");
-		descriptor.onlyOnLanguage(JdependRulesDefinition.LANGAUGE_JAVA);
-		descriptor.createIssuesForRuleRepositories(JdependRulesDefinition.REPOSITORY);
+		descriptor.onlyOnLanguage(Rules.LANGUAGE_JAVA);
+		descriptor.createIssuesForRuleRepositories(Rules.REPOSITORY);
 	}
 
 	@Override
@@ -70,12 +71,7 @@ public final class JdependSensor implements Sensor {
 		// Report issues
 		for (final JavaPackage javaPackage : javaPackages) {
 			final InputFile packageInfoFile = findPackageInfo(context, javaPackage);
-			if (packageInfoFile == null) {
-				// Report missing package-info.java
-				LOGGER.info("Package " + javaPackage.getName()
-						+ " does not contain a package-info.java, jDepend checks skipped.");
-
-			} else {
+			if (packageInfoFile != null) {
 				// Execute rules
 				numberOfClassesAndInterfacesRule.execute(javaPackage, packageInfoFile);
 				afferentCouplingsRule.execute(javaPackage, packageInfoFile);

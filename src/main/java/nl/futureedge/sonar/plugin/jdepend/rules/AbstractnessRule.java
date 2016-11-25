@@ -2,12 +2,12 @@ package nl.futureedge.sonar.plugin.jdepend.rules;
 
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.api.batch.sensor.issue.NewIssue;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.rule.RuleKey;
+import org.sonar.api.server.rule.RuleParamType;
+import org.sonar.api.server.rule.RulesDefinition.NewRepository;
+import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
-import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
 
 /**
  * Abstractness rule.
@@ -16,7 +16,25 @@ import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
  */
 public class AbstractnessRule extends AbstractRule implements Rule {
 
-	private static final Logger LOGGER = Loggers.get(AbstractnessRule.class);
+	/** Rule: Abstractness. */
+	public static final RuleKey RULE_KEY = RuleKey.of(Rules.REPOSITORY, "abstractness");
+
+	/** Param: maximum. */
+	public static final String PARAM_MAXIMUM = "maximum";
+
+	/**
+	 * Define the rule.
+	 *
+	 * @param repository
+	 */
+	public static void define(final NewRepository repository) {
+		final NewRule abstractnessRule = repository.createRule(RULE_KEY.rule()).setName("Abstractness")
+				.setHtmlDescription(
+						"The ratio of the number of abstract classes (and interfaces) in the analyzed package to the total number of classes in the analyzed package.<br/>"
+								+ "The range for this metric is 0% to 100%, with A=0% indicating a completely concrete package and A=100% indicating a completely abstract package.");
+		abstractnessRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
+				.setDescription("Maximum abstractness of a package allowed").setType(RuleParamType.INTEGER);
+	}
 
 	private final Integer maximum;
 
@@ -27,14 +45,8 @@ public class AbstractnessRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public AbstractnessRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.ABSTRACTNESS_RULE);
-
-		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
-		if (maximum == null) {
-			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
-					JdependRulesDefinition.PARAM_MAXIMUM);
-			disable();
-		}
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override
@@ -44,12 +56,10 @@ public class AbstractnessRule extends AbstractRule implements Rule {
 		}
 
 		final int abstractness = Math.round(javaPackage.abstractness() * 100);
-
 		if (abstractness > maximum) {
-			final NewIssue issue = getContext().newIssue().forRule(getKey());
-			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
-					.message("Too much abstractness (allowed: " + maximum + ", actual: " + abstractness + ")"));
-			issue.save();
+			registerIssue(packageInfoFile,
+					"Too much abstractness (allowed: " + maximum + ", actual: " + abstractness + ")");
 		}
 	}
+
 }

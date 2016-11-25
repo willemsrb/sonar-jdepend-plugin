@@ -6,11 +6,12 @@ import java.util.List;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.issue.NewIssue;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
+import org.sonar.api.rule.RuleKey;
+import org.sonar.api.server.rule.RuleParamType;
+import org.sonar.api.server.rule.RulesDefinition.NewRepository;
+import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
-import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
 
 /**
  * Package dependency cycles rule.
@@ -20,7 +21,25 @@ import nl.futureedge.sonar.plugin.jdepend.JdependRulesDefinition;
  */
 public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 
-	private static final Logger LOGGER = Loggers.get(PackageDependencyCyclesRule.class);
+	/** Rule: Package Dependency Cycles. */
+	public static final RuleKey RULE_KEY = RuleKey.of(Rules.REPOSITORY, "package-cycle");
+
+	/** Param: maximum. */
+	public static final String PARAM_MAXIMUM = "maximum";
+
+	/**
+	 * Define the rule.
+	 *
+	 * @param repository
+	 */
+	public static void define(final NewRepository repository) {
+		final NewRule packageDependencyCyclesRule = repository.createRule(RULE_KEY.rule())
+				.setName("Package Dependency Cycles").setHtmlDescription(
+						"Package dependency cycles are reported along with the hierarchical paths of packages participating in package dependency cycles.");
+		packageDependencyCyclesRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
+				.setDescription("Maximum number of package dependency cycles allowed").setType(RuleParamType.INTEGER)
+				.setDefaultValue("0");
+	}
 
 	private final Integer maximum;
 
@@ -31,14 +50,8 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 	 *            sensor context
 	 */
 	public PackageDependencyCyclesRule(final SensorContext context) {
-		super(context, JdependRulesDefinition.PACKAGE_DEPENDENCY_CYCLES_RULE);
-
-		maximum = getParamAsInteger(JdependRulesDefinition.PARAM_MAXIMUM);
-		if (maximum == null) {
-			LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(),
-					JdependRulesDefinition.PARAM_MAXIMUM);
-			disable();
-		}
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override
