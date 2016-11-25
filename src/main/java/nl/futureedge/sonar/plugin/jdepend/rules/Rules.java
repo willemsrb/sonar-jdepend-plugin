@@ -2,13 +2,16 @@ package nl.futureedge.sonar.plugin.jdepend.rules;
 
 import org.sonar.api.server.rule.RulesDefinition;
 
+/**
+ * Rules.
+ */
 public final class Rules implements RulesDefinition {
 
 	/** Repository name. */
-	public static String REPOSITORY = "jdepend";
+	public static final String REPOSITORY = "jdepend";
 
 	/** Repository name. */
-	public static String LANGUAGE_JAVA = "java";
+	public static final String LANGUAGE_JAVA = "java";
 
 	@Override
 	public void define(final Context context) {

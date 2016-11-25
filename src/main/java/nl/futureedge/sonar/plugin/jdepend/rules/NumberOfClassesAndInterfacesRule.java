@@ -23,6 +23,19 @@ public class NumberOfClassesAndInterfacesRule extends AbstractRule implements Ru
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
+	private final Integer maximum;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param context
+	 *            sensor context
+	 */
+	public NumberOfClassesAndInterfacesRule(final SensorContext context) {
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
 	/**
 	 * Define the rule.
 	 *
@@ -35,19 +48,6 @@ public class NumberOfClassesAndInterfacesRule extends AbstractRule implements Ru
 		numberOfClassesAndInterfacesRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum number of classes and interfaces allowed in the package")
 				.setType(RuleParamType.INTEGER);
-	}
-
-	private final Integer maximum;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param context
-	 *            sensor context
-	 */
-	public NumberOfClassesAndInterfacesRule(final SensorContext context) {
-		super(context, RULE_KEY);
-		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override

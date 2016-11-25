@@ -22,6 +22,19 @@ public class AbstractnessRule extends AbstractRule implements Rule {
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
+	private final Integer maximum;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param context
+	 *            sensor context
+	 */
+	public AbstractnessRule(final SensorContext context) {
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
 	/**
 	 * Define the rule.
 	 *
@@ -34,19 +47,6 @@ public class AbstractnessRule extends AbstractRule implements Rule {
 								+ "The range for this metric is 0% to 100%, with A=0% indicating a completely concrete package and A=100% indicating a completely abstract package.");
 		abstractnessRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum abstractness of a package allowed").setType(RuleParamType.INTEGER);
-	}
-
-	private final Integer maximum;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param context
-	 *            sensor context
-	 */
-	public AbstractnessRule(final SensorContext context) {
-		super(context, RULE_KEY);
-		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override

@@ -23,6 +23,19 @@ public class DistanceFromMainSequenceRule extends AbstractRule implements Rule {
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
+	private final Integer maximum;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param context
+	 *            sensor context
+	 */
+	public DistanceFromMainSequenceRule(final SensorContext context) {
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
 	/**
 	 * Define the rule.
 	 *
@@ -36,19 +49,6 @@ public class DistanceFromMainSequenceRule extends AbstractRule implements Rule {
 								+ "The range for this metric is 0 to 100%, with D=0% indicating a package that is coincident with the main sequence and D=100% indicating a package that is as far from the main sequence as possible.");
 		distanceFromMainSequenceRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum distance of a package allowed").setType(RuleParamType.INTEGER);
-	}
-
-	private final Integer maximum;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param context
-	 *            sensor context
-	 */
-	public DistanceFromMainSequenceRule(final SensorContext context) {
-		super(context, RULE_KEY);
-		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override

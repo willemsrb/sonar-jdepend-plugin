@@ -23,21 +23,6 @@ public class InstabilityRule extends AbstractRule implements Rule {
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
-	/**
-	 * Define the rule.
-	 *
-	 * @param repository
-	 */
-	public static void define(final NewRepository repository) {
-
-		final NewRule instabilityRule = repository.createRule(RULE_KEY.rule()).setName("Instability")
-				.setHtmlDescription(
-						"The ratio of efferent coupling (Ce) to total coupling (Ce + Ca) such that I = Ce / (Ce + Ca). This metric is an indicator of the package's resilience to change.<br/>"
-								+ "The range for this metric is 0 to 100%, with I=0% indicating a completely stable package and I=100% indicating a completely instable package.");
-		instabilityRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
-				.setDescription("Maximum instability of a package allowed").setType(RuleParamType.INTEGER);
-	}
-
 	private final Integer maximum;
 
 	/**
@@ -49,6 +34,20 @@ public class InstabilityRule extends AbstractRule implements Rule {
 	public InstabilityRule(final SensorContext context) {
 		super(context, RULE_KEY);
 		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
+	/**
+	 * Define the rule.
+	 *
+	 * @param repository
+	 */
+	public static void define(final NewRepository repository) {
+		final NewRule instabilityRule = repository.createRule(RULE_KEY.rule()).setName("Instability")
+				.setHtmlDescription(
+						"The ratio of efferent coupling (Ce) to total coupling (Ce + Ca) such that I = Ce / (Ce + Ca). This metric is an indicator of the package's resilience to change.<br/>"
+								+ "The range for this metric is 0 to 100%, with I=0% indicating a completely stable package and I=100% indicating a completely instable package.");
+		instabilityRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
+				.setDescription("Maximum instability of a package allowed").setType(RuleParamType.INTEGER);
 	}
 
 	@Override

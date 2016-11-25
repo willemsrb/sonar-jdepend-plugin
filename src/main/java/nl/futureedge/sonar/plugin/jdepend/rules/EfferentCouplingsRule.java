@@ -23,6 +23,19 @@ public class EfferentCouplingsRule extends AbstractRule implements Rule {
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
+	private final Integer maximum;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param context
+	 *            sensor context
+	 */
+	public EfferentCouplingsRule(final SensorContext context) {
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
 	/**
 	 * Define the rule.
 	 *
@@ -36,19 +49,6 @@ public class EfferentCouplingsRule extends AbstractRule implements Rule {
 				.setDescription(
 						"Maximum number of other packages that the classes in the package are allowed to depend upon")
 				.setType(RuleParamType.INTEGER);
-	}
-
-	private final Integer maximum;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param context
-	 *            sensor context
-	 */
-	public EfferentCouplingsRule(final SensorContext context) {
-		super(context, RULE_KEY);
-		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override

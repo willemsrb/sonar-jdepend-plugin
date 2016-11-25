@@ -27,6 +27,19 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 	/** Param: maximum. */
 	public static final String PARAM_MAXIMUM = "maximum";
 
+	private final Integer maximum;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param context
+	 *            sensor context
+	 */
+	public PackageDependencyCyclesRule(final SensorContext context) {
+		super(context, RULE_KEY);
+		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
+	}
+
 	/**
 	 * Define the rule.
 	 *
@@ -39,19 +52,6 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 		packageDependencyCyclesRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum number of package dependency cycles allowed").setType(RuleParamType.INTEGER)
 				.setDefaultValue("0");
-	}
-
-	private final Integer maximum;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param context
-	 *            sensor context
-	 */
-	public PackageDependencyCyclesRule(final SensorContext context) {
-		super(context, RULE_KEY);
-		maximum = getParamAsInteger(PARAM_MAXIMUM, true);
 	}
 
 	@Override
