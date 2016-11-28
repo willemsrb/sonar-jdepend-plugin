@@ -83,6 +83,8 @@ public class JdependComputerTest {
 		component = new TestComponent("test", Type.FILE, new FileAttributesImpl("java", false));
 		context = new TestMeasureComputerContext(component, settings, definition);
 
+		subject.compute(context);
+
 		Assert.assertNull(context.getMeasure("afferent-couplings"));
 		Assert.assertNull(context.getMeasure("efferent-couplings"));
 		Assert.assertNull(context.getMeasure("number-of-classes-and-interfaces"));
