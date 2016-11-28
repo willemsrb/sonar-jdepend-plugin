@@ -2,6 +2,8 @@ package nl.futureedge.sonar.plugin.jdepend.rules;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -61,20 +63,44 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 		}
 
 		if (javaPackage.containsCycle()) {
-			final NewIssue issue = getContext().newIssue().forRule(getKey());
-			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
-					.message(createMessage(javaPackage)));
-			issue.save();
+			final Set<String> cycles = collectCycles(javaPackage);
+			if (cycles.size() > maximum) {
+				final NewIssue issue = getContext().newIssue().forRule(getKey());
+				issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
+						.message(createMessage(cycles)));
+				issue.save();
+			}
 		}
 	}
 
-	private String createMessage(final JavaPackage javaPackage) {
-		final StringBuilder message = new StringBuilder("This package contains a package cycle with: ");
+	private Set<String> collectCycles(final JavaPackage javaPackage) {
+		// Collect all cycles
 		final List<JavaPackage> cycles = new ArrayList<>();
-		javaPackage.collectCycle(cycles);
+		javaPackage.collectAllCycles(cycles);
 
+		// Retrieve all package names from the cycles
+		final Set<String> result = new TreeSet<>();
 		for (final JavaPackage cycle : cycles) {
-			message.append("<br/>").append(cycle.getName());
+			result.add(cycle.getName());
+		}
+
+		// Remove 'this' package from the list
+		result.remove(javaPackage.getName());
+
+		return result;
+	}
+
+	private String createMessage(final Set<String> cycles) {
+		final StringBuilder message = new StringBuilder(
+				"This package contains a package cycles containing the following packages: ");
+		boolean first = true;
+		for (final String cycle : cycles) {
+			if (first) {
+				first = false;
+			} else {
+				message.append(", ");
+			}
+			message.append(cycle);
 		}
 
 		return message.toString();

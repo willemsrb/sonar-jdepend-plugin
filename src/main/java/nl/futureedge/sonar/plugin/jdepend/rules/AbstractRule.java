@@ -77,7 +77,7 @@ public abstract class AbstractRule implements Rule {
 			return null;
 		} else {
 			final String result = rule.param(paramKey);
-			if (required && result == null) {
+			if (required && isEmpty(result)) {
 				LOGGER.info("Rule {} activated, no value for parameter {} set. Disabling rule...", getKey(), paramKey);
 				disable();
 			}
@@ -95,16 +95,20 @@ public abstract class AbstractRule implements Rule {
 	 */
 	protected final Integer getParamAsInteger(final String paramKey, final boolean required) {
 		final String value = getParamAsString(paramKey, required);
-		if (value == null || "".equals(value)) {
+		if (isEmpty(value)) {
 			return null;
 		} else {
 			return Integer.valueOf(value);
 		}
 	}
 
+	private boolean isEmpty(final String result) {
+		return result == null || "".equals(result);
+	}
+
 	/**
 	 * Register an issue.
-	 * 
+	 *
 	 * @param inputFile
 	 *            input file
 	 * @param message

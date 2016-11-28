@@ -11,4 +11,5 @@ Uses the JDepend libraries (http://clarkware.com/software/JDepend.html) to add t
 - Distance from the Main Sequence
 - Package Dependency Cycle
 
-This plugin depends on the existence of a package-info.java file in the package to correctly display issues. 
+This plugin depends on the existence of a package-info.java file in the package to correctly display issues.  Missing
+package-info.java files can be detected and enforced with the 'missing-package-info' metric.
