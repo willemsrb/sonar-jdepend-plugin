@@ -1,5 +1,8 @@
-Version 0.4:
- - Added metrics for some Jdepend rules
+Version 1.0:
+ - Added metric for 'Number of Classes and Interfaces'
+ - Added metric for 'Afferent Couplings'
+ - Added metric for 'Efferent Couplings'
+ - Added metric for 'Package Dependency Cycle'
 
 Version 0.3:
  - Added metric to support missing packages-info.java files
