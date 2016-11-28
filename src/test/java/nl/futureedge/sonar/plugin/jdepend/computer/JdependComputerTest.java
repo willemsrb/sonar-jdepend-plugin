@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.sonar.api.ce.measure.Component.Type;
 import org.sonar.api.ce.measure.MeasureComputer.MeasureComputerDefinition;
 import org.sonar.api.ce.measure.test.TestComponent;
+import org.sonar.api.ce.measure.test.TestComponent.FileAttributesImpl;
 import org.sonar.api.ce.measure.test.TestMeasureComputerContext;
 import org.sonar.api.ce.measure.test.TestMeasureComputerDefinitionContext;
 import org.sonar.api.ce.measure.test.TestSettings;
@@ -64,7 +65,6 @@ public class JdependComputerTest {
 
 	@Test
 	public void test() {
-
 		context.addChildrenMeasures("afferent-couplings", 1);
 		context.addChildrenMeasures("efferent-couplings", 1, 4, 5);
 		context.addChildrenMeasures("number-of-classes-and-interfaces", 3, 4);
@@ -76,5 +76,16 @@ public class JdependComputerTest {
 		Assert.assertEquals(10, context.getMeasure("efferent-couplings").getIntValue());
 		Assert.assertEquals(7, context.getMeasure("number-of-classes-and-interfaces").getIntValue());
 		Assert.assertEquals(14, context.getMeasure("package-dependency-cycles").getIntValue());
+	}
+
+	@Test
+	public void testFile() {
+		component = new TestComponent("test", Type.FILE, new FileAttributesImpl("java", false));
+		context = new TestMeasureComputerContext(component, settings, definition);
+
+		Assert.assertNull(context.getMeasure("afferent-couplings"));
+		Assert.assertNull(context.getMeasure("efferent-couplings"));
+		Assert.assertNull(context.getMeasure("number-of-classes-and-interfaces"));
+		Assert.assertNull(context.getMeasure("package-dependency-cycles"));
 	}
 }
