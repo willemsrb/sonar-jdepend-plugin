@@ -1,3 +1,6 @@
+Version 0.4:
+ - Added metrics for some Jdepend rules
+
 Version 0.3:
  - Added metric to support missing packages-info.java files
  - Fixed 'Package Dependency Cycle' to correctly support maximum parameter

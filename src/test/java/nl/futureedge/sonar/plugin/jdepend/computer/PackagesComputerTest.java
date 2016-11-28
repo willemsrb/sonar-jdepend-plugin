@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend.packages;
+package nl.futureedge.sonar.plugin.jdepend.computer;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +15,8 @@ import org.sonar.api.ce.measure.test.TestComponent;
 import org.sonar.api.ce.measure.test.TestMeasureComputerContext;
 import org.sonar.api.ce.measure.test.TestMeasureComputerDefinitionContext;
 import org.sonar.api.ce.measure.test.TestSettings;
+
+import nl.futureedge.sonar.plugin.jdepend.computer.PackagesComputer;
 
 @RunWith(Parameterized.class)
 public class PackagesComputerTest {

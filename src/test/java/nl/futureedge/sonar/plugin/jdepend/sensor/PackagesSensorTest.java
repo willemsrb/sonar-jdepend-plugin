@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend.packages;
+package nl.futureedge.sonar.plugin.jdepend.sensor;
 
 import java.io.File;
 
@@ -10,6 +10,9 @@ import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.batch.sensor.measure.Measure;
 import org.sonar.api.measures.Metric;
+
+import nl.futureedge.sonar.plugin.jdepend.metrics.PackagesMetrics;
+import nl.futureedge.sonar.plugin.jdepend.sensor.PackagesSensor;
 
 public class PackagesSensorTest {
 

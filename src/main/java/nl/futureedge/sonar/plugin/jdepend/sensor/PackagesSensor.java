@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend.packages;
+package nl.futureedge.sonar.plugin.jdepend.sensor;
 
 import org.sonar.api.batch.fs.FilePredicates;
 import org.sonar.api.batch.fs.FileSystem;
@@ -9,6 +9,7 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.measures.Metric;
 
+import nl.futureedge.sonar.plugin.jdepend.metrics.PackagesMetrics;
 import nl.futureedge.sonar.plugin.jdepend.rules.Rules;
 
 /**

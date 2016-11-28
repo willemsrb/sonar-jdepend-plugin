@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend.packages;
+package nl.futureedge.sonar.plugin.jdepend.metrics;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.sonar.api.measures.Metric;
 
-public class PackagesMetricsTest {
+public class JdependMetricsTest {
 
 	@Test
 	public void test() {
-		final PackagesMetrics subject = new PackagesMetrics();
+		final JdependMetrics subject = new JdependMetrics();
 		final List<Metric> metrics = subject.getMetrics();
 
-		Assert.assertEquals(6, metrics.size());
+		Assert.assertEquals(4, metrics.size());
 	}
 }

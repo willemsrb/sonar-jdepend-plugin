@@ -14,6 +14,7 @@ import org.sonar.api.server.rule.RulesDefinition.NewRepository;
 import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
+import nl.futureedge.sonar.plugin.jdepend.metrics.JdependMetrics;
 
 /**
  * Package dependency cycles rule.
@@ -58,18 +59,19 @@ public class PackageDependencyCyclesRule extends AbstractRule implements Rule {
 
 	@Override
 	public void execute(final JavaPackage javaPackage, final InputFile packageInfoFile) {
+		final Set<String> cycles = collectCycles(javaPackage);
+		getContext().<Integer> newMeasure().forMetric(JdependMetrics.PACKAGE_DEPENDENCY_CYCLES).on(packageInfoFile)
+				.withValue(cycles.size()).save();
+
 		if (!isActive()) {
 			return;
 		}
 
-		if (javaPackage.containsCycle()) {
-			final Set<String> cycles = collectCycles(javaPackage);
-			if (cycles.size() > maximum) {
-				final NewIssue issue = getContext().newIssue().forRule(getKey());
-				issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
-						.message(createMessage(cycles)));
-				issue.save();
-			}
+		if (cycles.size() > maximum) {
+			final NewIssue issue = getContext().newIssue().forRule(getKey());
+			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
+					.message(createMessage(cycles)));
+			issue.save();
 		}
 	}
 

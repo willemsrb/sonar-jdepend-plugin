@@ -14,7 +14,7 @@ import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.server.rule.RulesDefinition;
 
-import nl.futureedge.sonar.plugin.jdepend.JdependSensor;
+import nl.futureedge.sonar.plugin.jdepend.sensor.JdependSensor;
 
 public class RulesTest {
 

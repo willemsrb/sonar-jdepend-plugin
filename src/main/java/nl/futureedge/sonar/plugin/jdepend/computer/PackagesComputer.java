@@ -1,8 +1,9 @@
-package nl.futureedge.sonar.plugin.jdepend.packages;
+package nl.futureedge.sonar.plugin.jdepend.computer;
 
 import org.sonar.api.ce.measure.Component.Type;
-import org.sonar.api.ce.measure.Measure;
 import org.sonar.api.ce.measure.MeasureComputer;
+
+import nl.futureedge.sonar.plugin.jdepend.metrics.PackagesMetrics;
 
 /**
  * Packages computer.
@@ -21,10 +22,10 @@ public class PackagesComputer implements MeasureComputer {
 
 	@Override
 	public void compute(final MeasureComputerContext context) {
-		final int countPackageInfo = countFromChildren(context, PackagesMetrics.PACKAGE_INFO_COUNT.key());
-		final int countJava = countFromChildren(context, PackagesMetrics.JAVA_COUNT.key());
-		int countPackage = countFromChildren(context, PackagesMetrics.PACKAGE_COUNT.key());
-		int countMissing = countFromChildren(context, PackagesMetrics.MISSING_PACKAGE_INFO_COUNT.key());
+		final int countPackageInfo = ComputerUtil.countFromChildren(context, PackagesMetrics.PACKAGE_INFO_COUNT.key());
+		final int countJava = ComputerUtil.countFromChildren(context, PackagesMetrics.JAVA_COUNT.key());
+		int countPackage = ComputerUtil.countFromChildren(context, PackagesMetrics.PACKAGE_COUNT.key());
+		int countMissing = ComputerUtil.countFromChildren(context, PackagesMetrics.MISSING_PACKAGE_INFO_COUNT.key());
 
 		if (countJava > 0) {
 			countPackage++;
@@ -43,12 +44,4 @@ public class PackagesComputer implements MeasureComputer {
 		}
 	}
 
-	private int countFromChildren(final MeasureComputerContext context, final String key) {
-		int result = 0;
-		for (final Measure measure : context.getChildrenMeasures(key)) {
-			result += measure.getIntValue();
-		}
-
-		return result;
-	}
 }

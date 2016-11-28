@@ -1,4 +1,4 @@
-package nl.futureedge.sonar.plugin.jdepend;
+package nl.futureedge.sonar.plugin.jdepend.sensor;
 
 import org.junit.Assert;
 import org.junit.Test;

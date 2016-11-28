@@ -9,6 +9,7 @@ import org.sonar.api.server.rule.RulesDefinition.NewRepository;
 import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
+import nl.futureedge.sonar.plugin.jdepend.metrics.JdependMetrics;
 
 /**
  * Number of classes and interfaces rule.
@@ -52,11 +53,14 @@ public class NumberOfClassesAndInterfacesRule extends AbstractRule implements Ru
 
 	@Override
 	public void execute(final JavaPackage javaPackage, final InputFile packageInfoFile) {
+		final int classcount = javaPackage.getClassCount();
+		getContext().<Integer> newMeasure().forMetric(JdependMetrics.NUMBER_OF_CLASSES_AND_INTERFACES)
+				.on(packageInfoFile).withValue(classcount).save();
+
 		if (!isActive()) {
 			return;
 		}
 
-		final int classcount = javaPackage.getClassCount();
 		if (classcount > maximum) {
 			final NewIssue issue = getContext().newIssue().forRule(getKey());
 			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))

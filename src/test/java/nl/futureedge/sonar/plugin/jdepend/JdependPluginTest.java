@@ -14,6 +14,6 @@ public class JdependPluginTest {
 
 		Assert.assertEquals(0, context.getExtensions().size());
 		javaPlugin.define(context);
-		Assert.assertEquals(5, context.getExtensions().size());
+		Assert.assertEquals(7, context.getExtensions().size());
 	}
 }

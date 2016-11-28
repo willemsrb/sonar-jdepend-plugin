@@ -9,6 +9,7 @@ import org.sonar.api.server.rule.RulesDefinition.NewRepository;
 import org.sonar.api.server.rule.RulesDefinition.NewRule;
 
 import jdepend.framework.JavaPackage;
+import nl.futureedge.sonar.plugin.jdepend.metrics.JdependMetrics;
 
 /**
  * Afferent couplings rule.
@@ -52,11 +53,14 @@ public class AfferentCouplingsRule extends AbstractRule implements Rule {
 
 	@Override
 	public void execute(final JavaPackage javaPackage, final InputFile packageInfoFile) {
+		final int afferentCoupling = javaPackage.afferentCoupling();
+		getContext().<Integer> newMeasure().forMetric(JdependMetrics.AFFERENT_COUPLINGS).on(packageInfoFile)
+				.withValue(afferentCoupling).save();
+
 		if (!isActive()) {
 			return;
 		}
 
-		final int afferentCoupling = javaPackage.afferentCoupling();
 		if (afferentCoupling > maximum) {
 			final NewIssue issue = getContext().newIssue().forRule(getKey());
 			issue.at(issue.newLocation().on(packageInfoFile).at(packageInfoFile.selectLine(1))
