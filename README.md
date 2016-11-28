@@ -13,7 +13,7 @@ Uses the JDepend libraries (http://clarkware.com/software/JDepend.html) to add t
 
 This plugin depends on the existence of a package-info.java file in the package to correctly display issues (if no package-info.java file is present, the issues will not be registered).
 
-Missing package-info.java files can be detected and enforced with the follwing metrics:
+Missing package-info.java files can be detected and enforced with the following metrics:
 
 - Number of Packages (Metric)
 - Number of missing package-info.java files (Metric)
