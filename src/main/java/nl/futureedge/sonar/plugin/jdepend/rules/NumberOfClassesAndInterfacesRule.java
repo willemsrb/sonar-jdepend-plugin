@@ -48,7 +48,7 @@ public class NumberOfClassesAndInterfacesRule extends AbstractRule implements Ru
 						"The number of concrete and abstract classes (and interfaces) in the package is an indicator of the extensibility of the package.");
 		numberOfClassesAndInterfacesRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum number of classes and interfaces allowed in the package")
-				.setType(RuleParamType.INTEGER);
+				.setType(RuleParamType.INTEGER).setDefaultValue("50");
 	}
 
 	@Override

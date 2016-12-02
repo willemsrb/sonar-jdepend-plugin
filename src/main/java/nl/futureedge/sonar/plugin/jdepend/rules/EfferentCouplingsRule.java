@@ -49,7 +49,7 @@ public class EfferentCouplingsRule extends AbstractRule implements Rule {
 		efferentCouplingsRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription(
 						"Maximum number of other packages that the classes in the package are allowed to depend upon")
-				.setType(RuleParamType.INTEGER);
+				.setType(RuleParamType.INTEGER).setDefaultValue("25");
 	}
 
 	@Override

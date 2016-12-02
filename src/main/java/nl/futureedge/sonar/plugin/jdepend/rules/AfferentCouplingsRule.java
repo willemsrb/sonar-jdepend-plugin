@@ -48,7 +48,7 @@ public class AfferentCouplingsRule extends AbstractRule implements Rule {
 						"The number of other packages that depend upon classes within the package is an indicator of the package's responsibility.");
 		afferentCouplingsRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
 				.setDescription("Maximum number of other packages allowed to depend upon classes within the package")
-				.setType(RuleParamType.INTEGER);
+				.setType(RuleParamType.INTEGER).setDefaultValue("25");
 	}
 
 	@Override

@@ -47,7 +47,8 @@ public class InstabilityRule extends AbstractRule implements Rule {
 						"The ratio of efferent coupling (Ce) to total coupling (Ce + Ca) such that I = Ce / (Ce + Ca). This metric is an indicator of the package's resilience to change.<br/>"
 								+ "The range for this metric is 0 to 100%, with I=0% indicating a completely stable package and I=100% indicating a completely instable package.");
 		instabilityRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
-				.setDescription("Maximum instability of a package allowed").setType(RuleParamType.INTEGER);
+				.setDescription("Maximum instability of a package allowed").setType(RuleParamType.INTEGER)
+				.setDefaultValue("75");
 	}
 
 	@Override

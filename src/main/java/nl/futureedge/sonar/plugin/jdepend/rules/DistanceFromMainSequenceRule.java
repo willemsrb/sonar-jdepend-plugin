@@ -48,7 +48,8 @@ public class DistanceFromMainSequenceRule extends AbstractRule implements Rule {
 								+ "A package squarely on the main sequence is optimally balanced with respect to its abstractness and stability. Ideal packages are either completely abstract and stable (x=0, y=1) or completely concrete and instable (x=1, y=0).<br/>"
 								+ "The range for this metric is 0 to 100%, with D=0% indicating a package that is coincident with the main sequence and D=100% indicating a package that is as far from the main sequence as possible.");
 		distanceFromMainSequenceRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
-				.setDescription("Maximum distance of a package allowed").setType(RuleParamType.INTEGER);
+				.setDescription("Maximum distance of a package allowed").setType(RuleParamType.INTEGER)
+				.setDefaultValue("75");
 	}
 
 	@Override

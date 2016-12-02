@@ -46,7 +46,8 @@ public class AbstractnessRule extends AbstractRule implements Rule {
 						"The ratio of the number of abstract classes (and interfaces) in the analyzed package to the total number of classes in the analyzed package.<br/>"
 								+ "The range for this metric is 0% to 100%, with A=0% indicating a completely concrete package and A=100% indicating a completely abstract package.");
 		abstractnessRule.createParam(PARAM_MAXIMUM).setName(PARAM_MAXIMUM)
-				.setDescription("Maximum abstractness of a package allowed").setType(RuleParamType.INTEGER);
+				.setDescription("Maximum abstractness of a package allowed").setType(RuleParamType.INTEGER)
+				.setDefaultValue("75");
 	}
 
 	@Override
