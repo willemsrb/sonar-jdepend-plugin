@@ -23,3 +23,6 @@ Missing package-info.java files can be detected and enforced with the following 
 The plugin executes the Jdepend library (packaged within the plugin) during the execution of the SonarQube scanner to scan the binaries, so no extra configuration is needed within the project. The sensor will not be executed if no Jdepend rules have been activated.
 
 
+#### Known issues
+
+The used JDepend library does not parse the constant pool completely for Java 8. It will display an error for 'invoked dynamic' call (Unknown constant: 18). This will be fixed in version 1.1
