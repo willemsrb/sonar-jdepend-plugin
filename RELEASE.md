@@ -1,3 +1,7 @@
+Version 1.1:
+ - Updated to fork guru.nidi:jdepend:2.9.5
+ - Added IT for SonarQube 6.2 and 6.3
+
 Version 1.0:
  - Added metric for 'Number of Classes and Interfaces'
  - Added metric for 'Afferent Couplings'
