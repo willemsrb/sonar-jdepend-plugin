@@ -1,7 +1,7 @@
 # JDepend plugin for SonarQube [![Build Status](https://travis-ci.org/willemsrb/sonar-jdepend-plugin.svg?branch=master)](https://travis-ci.org/willemsrb/sonar-jdepend-plugin) [![Quality Gate](https://sonarqube.com/api/badges/gate?key=nl.future-edge.sonarqube.plugins:sonar-jdepend-plugin)](https://sonarqube.com/dashboard/index?id=nl.future-edge.sonarqube.plugins%3Asonar-jdepend-plugin)
-*Requires SonarQube 5.6+ (tested against 5.6, 5.6.3 (LTS), 6.0 and 6.1)*
+*Requires SonarQube 5.6+ (tested against 5.6, 5.6.5 (LTS), 6.0, 6.1, 6.2 and 6.3)*
 
-Uses the JDepend libraries (http://clarkware.com/software/JDepend.html version 2.9.1) to add the following rules and metrics to SonarQube:
+Uses a fork (https://github.com/nidi3/jdepend) of the JDepend libraries (http://clarkware.com/software/JDepend.html version 2.9.1) to add the following rules and metrics to SonarQube:
 
 - Number of Classes and Interfaces (Rule and Metric)
 - Afferent Couplings (Rule and Metric)
@@ -21,8 +21,3 @@ Missing package-info.java files can be detected and enforced with the following 
 #### Configuration
 
 The plugin executes the Jdepend library (packaged within the plugin) during the execution of the SonarQube scanner to scan the binaries, so no extra configuration is needed within the project. The sensor will not be executed if no Jdepend rules have been activated.
-
-
-#### Known issues
-
-The used JDepend library does not parse the constant pool completely for Java 8. It will display an error for 'invoked dynamic' call (Unknown constant: 18). This will be fixed in version 1.1
