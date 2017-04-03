@@ -13,7 +13,7 @@ import org.sonar.api.utils.log.Loggers;
  */
 public abstract class AbstractRule implements Rule {
 
-	private static final Logger LOGGER = Loggers.get(AbstractnessRule.class);
+	private static final Logger LOGGER = Loggers.get(AbstractRule.class);
 
 	private final SensorContext context;
 	private final RuleKey ruleKey;
