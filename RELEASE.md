@@ -1,5 +1,13 @@
 Version 1.1:
  - Updated to fork guru.nidi:jdepend:2.9.5
+   Changes from original (see https://github.com/nidi3/jdepend):
+     - Fix bug in DependencyConstraint
+     - Support Java 8 class files
+     - Add hamcrest matchers
+     - Use generics
+     - Mavenize
+     - New APIs for DependencyConstraint and PackageFilter
+     - Parse generic signatures in class files
  - Added IT for SonarQube 6.2 and 6.3
 
 Version 1.0:
