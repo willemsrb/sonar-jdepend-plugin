@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.InputFile.Type;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
@@ -56,7 +57,6 @@ public final class JdependSensor implements Sensor {
 		}
 
 		// Analyze
-		@SuppressWarnings("unchecked")
 		final Collection<JavaPackage> javaPackages = jdepend.analyze();
 
 		// Setup rules
@@ -85,7 +85,8 @@ public final class JdependSensor implements Sensor {
 	}
 
 	private InputFile findPackageInfo(final SensorContext context, final JavaPackage javaPackage) {
-		return context.fileSystem().inputFile(new PackageInfoPredicate(javaPackage.getName()));
+		return context.fileSystem().inputFile(context.fileSystem().predicates().and(
+				context.fileSystem().predicates().hasType(Type.MAIN), new PackageInfoPredicate(javaPackage.getName())));
 	}
 
 	/**
