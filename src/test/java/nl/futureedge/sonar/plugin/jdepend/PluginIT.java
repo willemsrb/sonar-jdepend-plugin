@@ -27,7 +27,7 @@ public class PluginIT {
 
 	@Parameters
 	public static Collection<Object[]> sonarQubeVersions() {
-		return Arrays.asList(new Object[][] { { "5.6" }, { "LTS" }, { "6.0" }, { "6.1" }, { "6.2" }, { "6.3" } });
+		return Arrays.asList(new Object[][] { { "5.6" }, { "LTS" }, { "6.0" }, { "6.1" }, { "6.2" }, { "6.3" }, { "6.3.1" } });
 	}
 
 	private final String sonarQubeVersion;
