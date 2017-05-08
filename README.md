@@ -21,3 +21,7 @@ Missing package-info.java files can be detected and enforced with the following 
 #### Configuration
 
 The plugin executes the Jdepend library (packaged within the plugin) during the execution of the SonarQube scanner to scan the binaries, so no extra configuration is needed within the project. The sensor will not be executed if no Jdepend rules have been activated.
+
+#### Installation
+
+Install the plugin via the Update Center in the SonarQube administration pages. Or to install the plugin manually; copy the .jar file from the release to the `extensions/plugins` directory of your SonarQube installation.
