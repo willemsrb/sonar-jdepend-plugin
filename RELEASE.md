@@ -1,3 +1,6 @@
+Version 1.1.1:
+ - Changed sensor so all metrics are calculated even if no rules are activated 
+
 Version 1.1:
  - Updated to fork guru.nidi:jdepend:2.9.5
    Changes from original (see https://github.com/nidi3/jdepend):
