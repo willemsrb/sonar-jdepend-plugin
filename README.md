@@ -12,6 +12,7 @@ Uses a fork (https://github.com/nidi3/jdepend) of the JDepend libraries (http://
 - Package Dependency Cycle (Rule and Metric)
 
 This plugin depends on the existence of a package-info.java file in the package to correctly display issues (if no package-info.java file is present, the issues cannot be registered, as SonarQube only allows issues on existing files).
+(See [Workarounds](WORKAROUNDS.md) to generate package-info.java files using a Maven plugin)
 
 Missing package-info.java files can be detected and enforced with the following metrics:
 
