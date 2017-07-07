@@ -1,7 +1,7 @@
 package nl.futureedge.sonar.plugin.jdepend.sensor;
 
 import java.io.File;
-
+import nl.futureedge.sonar.plugin.jdepend.metrics.PackagesMetrics;
 import org.junit.Assert;
 import org.junit.Test;
 import org.sonar.api.batch.fs.InputFile.Type;
@@ -10,9 +10,6 @@ import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.batch.sensor.measure.Measure;
 import org.sonar.api.measures.Metric;
-
-import nl.futureedge.sonar.plugin.jdepend.metrics.PackagesMetrics;
-import nl.futureedge.sonar.plugin.jdepend.sensor.PackagesSensor;
 
 public class PackagesSensorTest {
 
@@ -25,6 +22,7 @@ public class PackagesSensorTest {
 		Assert.assertEquals("Packages sensor", descriptor.name());
 		Assert.assertEquals(1, descriptor.languages().size());
 		Assert.assertEquals("java", descriptor.languages().iterator().next());
+		Assert.assertEquals(0, descriptor.ruleRepositories().size());
 	}
 
 	@Test

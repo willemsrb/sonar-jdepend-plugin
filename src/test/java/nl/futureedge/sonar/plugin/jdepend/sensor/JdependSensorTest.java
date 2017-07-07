@@ -15,7 +15,6 @@ public class JdependSensorTest {
 		Assert.assertEquals("jDepend sensor", descriptor.name());
 		Assert.assertEquals(1, descriptor.languages().size());
 		Assert.assertEquals("java", descriptor.languages().iterator().next());
-		Assert.assertEquals(1, descriptor.ruleRepositories().size());
-		Assert.assertEquals("jdepend", descriptor.ruleRepositories().iterator().next());
+		Assert.assertEquals(0, descriptor.ruleRepositories().size());
 	}
 }

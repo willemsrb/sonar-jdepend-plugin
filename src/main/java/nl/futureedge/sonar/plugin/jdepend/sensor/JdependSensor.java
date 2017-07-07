@@ -35,7 +35,6 @@ public final class JdependSensor implements Sensor {
 	public void describe(final SensorDescriptor descriptor) {
 		descriptor.name("jDepend sensor");
 		descriptor.onlyOnLanguage(Rules.LANGUAGE_JAVA);
-		descriptor.createIssuesForRuleRepositories(Rules.REPOSITORY);
 	}
 
 	@Override
