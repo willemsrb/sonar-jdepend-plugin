@@ -31,3 +31,9 @@ buildNumber.properties
 **/.classpath
 **/.checkstyle
 **/.eclipse-pmd
+
+#
+# intellij
+#
+.idea
+*.iml
