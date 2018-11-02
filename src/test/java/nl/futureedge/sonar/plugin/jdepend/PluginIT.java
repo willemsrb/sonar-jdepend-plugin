@@ -1,13 +1,18 @@
 package nl.futureedge.sonar.plugin.jdepend;
 
 import com.sonar.orchestrator.Orchestrator;
+import com.sonar.orchestrator.OrchestratorBuilder;
 import com.sonar.orchestrator.build.MavenBuild;
 import com.sonar.orchestrator.locator.FileLocation;
+import com.sonar.orchestrator.locator.MavenLocation;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +24,9 @@ import org.sonar.wsclient.issue.IssueClient;
 import org.sonar.wsclient.issue.IssueQuery;
 import org.sonar.wsclient.project.NewProject;
 
+/**
+ * Tests compatibility with sonar-java-plugin and SonarQube. <br>
+ */
 @RunWith(Parameterized.class)
 public class PluginIT {
 
@@ -28,8 +36,10 @@ public class PluginIT {
      */
     @Parameterized.Parameters
     public static Collection<Object[]> sonarQubeVersions() {
-        return Arrays
-                .asList(new Object[][]{{"5.6", "4.11"}, {"LTS", "4.11"}, {"6.0", "4.11"}, {"6.1", "4.11"}, {"6.2", "4.11"}, {"6.3", "4.11"}, {"6.4", "4.11"}});
+        return Arrays.asList(new Object[][] {//
+            {"LATEST_RELEASE[7.4]", "5.8.0.15699"}, //
+            {"LATEST_RELEASE[6.7]", "5.8.0.15699"}, //
+        });
     }
 
     private final String sonarQubeVersion;
@@ -43,13 +53,14 @@ public class PluginIT {
 
     @Before
     public void setupSonarQube() {
-        System.getProperties().setProperty("sonar.runtimeVersion", sonarQubeVersion);
-
-        orchestrator = Orchestrator.builderEnv()
-                .addPlugin(FileLocation.byWildcardMavenFilename(new File("target"), "sonar-jdepend-plugin-*.jar"))
-                .setOrchestratorProperty("javaVersion", javaVersion).addPlugin("java")
-                .restoreProfileAtStartup(FileLocation.of(new File("target/it", "profile.xml"))).build();
-
+        final OrchestratorBuilder builder = Orchestrator.builderEnv()
+            .setSonarVersion(sonarQubeVersion)
+            .restoreProfileAtStartup(FileLocation.of(new File("target/it", "profile.xml")))
+            .addPlugin(FileLocation.byWildcardMavenFilename(new File("target"), "sonar-jdepend-plugin-*.jar"))
+            .addPlugin(MavenLocation.of("org.sonarsource.java", "sonar-java-plugin", javaVersion))
+            .setServerProperty("sonar.web.javaOpts", "-Xmx1g") //
+            .setServerProperty("sonar.es.javaOpts", "-Xmx1g");
+        orchestrator = builder.build();
         orchestrator.start();
 
         // Provision project
