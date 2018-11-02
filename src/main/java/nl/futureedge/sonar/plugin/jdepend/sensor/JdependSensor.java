@@ -2,6 +2,7 @@ package nl.futureedge.sonar.plugin.jdepend.sensor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import jdepend.framework.JDepend;
 import jdepend.framework.JavaPackage;
@@ -54,17 +55,19 @@ public final class JdependSensor implements Sensor {
         }
 
         // Configure
-        final String javaClasses = context.settings().getString("sonar.java.binaries");
+        final String[] paths = context.settings().getStringArrayBySeparator("sonar.java.binaries", ",");
 
         try {
-            if (javaClasses == null || "".equals(javaClasses)) {
+            if (paths == null || paths.length == 0) {
                 LOGGER.info("No classes to analyse, skipping analysis");
                 return;
             }
-            LOGGER.info("Analysing classes in {}", javaClasses);
-            jdepend.addDirectory(javaClasses);
+            LOGGER.info("Analysing classes in {}", (Object) paths);
+            for (String path : paths) {
+                jdepend.addDirectory(path);
+            }
         } catch (final IOException e) {
-            throw new IllegalStateException("Could not analyse classes in " + javaClasses, e);
+            throw new IllegalStateException("Could not analyse classes in " + Arrays.toString(paths), e);
         }
 
         // Analyze
